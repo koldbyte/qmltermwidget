@@ -50,16 +50,20 @@ lib/kpty.cpp
 lib/kptydevice.cpp
 lib/kptyprocess.cpp
 lib/tools.cpp
+lib/qtermwidget.cpp
+lib/SearchBar.cpp
 src/ksession.cpp
 src/qmltermwidget_plugin.cpp
 src/main.cpp
 )
 
+#qt5_wrap_ui(qmlkonsole_SRC lib/SearchBar.ui)
 
 QT5_ADD_RESOURCES(qmlkonsole_SRC
     qml.qrc
 )
 
+set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 
 ADD_EXECUTABLE( qmlkonsole ${qmlkonsole_SRC} )
