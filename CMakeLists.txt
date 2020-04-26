@@ -57,8 +57,6 @@ src/qmltermwidget_plugin.cpp
 src/main.cpp
 )
 
-#qt5_wrap_ui(qmlkonsole_SRC lib/SearchBar.ui)
-
 QT5_ADD_RESOURCES(qmlkonsole_SRC
     qml.qrc
 )
