@@ -63,7 +63,7 @@ QT5_ADD_RESOURCES(qmlkonsole_SRC
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 
-ADD_EXECUTABLE( qmlkonsole ${qmlkonsole_SRC})
+ADD_LIBRARY(qmlkonsole SHARED ${qmlkonsole_SRC})
 
 TARGET_LINK_LIBRARIES( qmlkonsole
     Qt5::Core
@@ -73,5 +73,28 @@ TARGET_LINK_LIBRARIES( qmlkonsole
     ${CMAKE_THREAD_LIBS_INIT}
 )
 
+### Sets QT_INSTALL_QML to the directory where QML Plugins should be installed
+function(FindQtInstallQml)
+    execute_process(
+        COMMAND qmake -query QT_INSTALL_QML
+        OUTPUT_VARIABLE PROC_RESULT
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+    )
+    set(QML_INSTALL_DIR ${PROC_RESULT} PARENT_SCOPE)
+endfunction()
 
-INSTALL( TARGETS qmlkonsole DESTINATION bin)
+
+### Find where to install QML Plugins (stored in QT_INSTALL_QML)
+FindQtInstallQml()
+
+# Install the .so shared library
+INSTALL(TARGETS qmlkonsole
+    RUNTIME DESTINATION ${QML_INSTALL_DIR}/qmlkonsole
+    LIBRARY DESTINATION ${QML_INSTALL_DIR}/qmlkonsole
+    ARCHIVE DESTINATION ${QML_INSTALL_DIR}/qmlkonsole
+)
+
+INSTALL(FILES qmldir DESTINATION ${QML_INSTALL_DIR}/qmlkonsole)
+INSTALL(FILES src/QMLTermScrollbar.qml DESTINATION ${QML_INSTALL_DIR}/qmlkonsole)
+INSTALL(DIRECTORY lib/color-schemes DESTINATION ${QML_INSTALL_DIR}/qmlkonsole)
+INSTALL(DIRECTORY lib/kb-layouts DESTINATION ${QML_INSTALL_DIR}/qmlkonsole)
