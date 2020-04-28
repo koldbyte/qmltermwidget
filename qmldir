@@ -1,4 +1,4 @@
-module QMLTermWidget
-plugin qmltermwidget
+module qmlkonsole
+plugin qmlkonsole
 QMLTermScrollbar 1.0 QMLTermScrollbar.qml
 
